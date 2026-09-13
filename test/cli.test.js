@@ -43,7 +43,7 @@ function harness({ argv, configured = false, configuredUrl, fetchStatus = 401, c
   }
 }
 
-test('requires an explicit client in Phase 3', async () => {
+test('requires an explicit client', async () => {
   const result = await harness({ argv: ['install'] }).run()
   assert.equal(result.code, 2)
   assert.match(result.stderr, /--client codex or --client claude/)

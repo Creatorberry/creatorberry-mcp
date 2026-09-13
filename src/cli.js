@@ -35,7 +35,7 @@ Usage:
   creatorberry remove  --client <codex|claude> [options]
 
 Options:
-  --client <name>   Required in Phase 3: codex or claude
+  --client <name>   Required: codex or claude
   --url <url>       MCP URL (default: ${DEFAULT_MCP_URL})
   --name <name>     MCP configuration name (default: ${DEFAULT_MCP_NAME})
   --scope <scope>   Claude scope: user, local, or project (default: user)
