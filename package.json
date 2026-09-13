@@ -1,0 +1,37 @@
+{
+  "name": "creatorberry-mcp",
+  "version": "0.1.0",
+  "description": "Install and manage the CreatorBerry MCP connection for AI coding clients.",
+  "license": "MIT",
+  "author": "Creatorberry",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Creatorberry/creatorberry-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Creatorberry/creatorberry-mcp/issues"
+  },
+  "homepage": "https://github.com/Creatorberry/creatorberry-mcp#readme",
+  "type": "module",
+  "bin": {
+    "creatorberry": "./bin/creatorberry.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check bin/creatorberry.js && node --check src/cli.js && node --check src/system-runner.js"
+  },
+  "keywords": [
+    "creatorberry",
+    "mcp",
+    "codex",
+    "claude-code"
+  ]
+}
