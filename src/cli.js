@@ -219,7 +219,8 @@ export async function runCli({ argv, runner, fetchImpl, input, output, errorOutp
 
     const result = runner.run(executable, args, { inherit: true })
     if (result.code !== 0) {
-      write(errorOutput, `Installation failed. ${client.command} exited with code ${result.code}.`)
+      const detail = result.stderr.trim() || result.stdout.trim()
+      write(errorOutput, `Installation failed. ${client.command} exited with code ${result.code}.${detail ? ` ${detail}` : ''}`)
       return 5
     }
     const after = inspectConfiguration(runner, executable, client, options)

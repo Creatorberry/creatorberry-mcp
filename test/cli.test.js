@@ -3,7 +3,7 @@ import test from 'node:test'
 import { PassThrough } from 'node:stream'
 import { runCli } from '../src/cli.js'
 
-function harness({ argv, configured = false, configuredUrl, fetchStatus = 401, clientFound = true }) {
+function harness({ argv, configured = false, configuredUrl, fetchStatus = 401, clientFound = true, addFailure = null }) {
   const calls = []
   let exists = configured
   let url = configuredUrl
@@ -26,6 +26,7 @@ function harness({ argv, configured = false, configuredUrl, fetchStatus = 401, c
           : { code: 1, stdout: '', stderr: 'not found' }
       }
       if (args[1] === 'add') {
+        if (addFailure) return addFailure
         exists = true
         url = args.find((part) => /^https?:/.test(part))
       }
@@ -89,6 +90,15 @@ test('installs Claude in user scope and verifies the result', async () => {
     'creatorberry', 'https://www.creatorberry.com/api/mcp',
   ])
   assert.match(result.stdout, /OAuth authentication is still required/)
+})
+
+test('installation failure includes the underlying launcher error', async () => {
+  const result = await harness({
+    argv: ['install', '--client', 'claude', '--yes'],
+    addFailure: { code: 1, stdout: '', stderr: 'spawnSync claude ENOENT' },
+  }).run()
+  assert.equal(result.code, 5)
+  assert.match(result.stderr, /spawnSync claude ENOENT/)
 })
 
 test('install is idempotent when the same URL exists', async () => {

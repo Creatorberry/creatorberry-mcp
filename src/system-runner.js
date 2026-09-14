@@ -8,14 +8,31 @@ function safeCmdArgument(value) {
   return `"${value}"`
 }
 
+const WINDOWS_EXECUTABLE_PRIORITY = new Map([
+  ['.exe', 0],
+  ['.com', 1],
+  ['.cmd', 2],
+  ['.bat', 3],
+])
+
+export function selectExecutable(candidates, platform = process.platform) {
+  const paths = candidates.map((candidate) => candidate.trim()).filter(Boolean)
+  if (platform !== 'win32') return paths[0] ?? null
+
+  return paths
+    .map((candidate, index) => ({
+      candidate,
+      index,
+      priority: WINDOWS_EXECUTABLE_PRIORITY.get(path.extname(candidate).toLowerCase()) ?? 4,
+    }))
+    .sort((left, right) => left.priority - right.priority || left.index - right.index)[0]?.candidate ?? null
+}
+
 function findOnPath(command, platform) {
   const locator = platform === 'win32' ? 'where.exe' : 'which'
   const result = spawnSync(locator, [command], { encoding: 'utf8', windowsHide: true })
   if (result.status !== 0) return null
-  return result.stdout
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .find(Boolean) ?? null
+  return selectExecutable(result.stdout.split(/\r?\n/), platform)
 }
 
 function execute(executable, args, options, platform) {
