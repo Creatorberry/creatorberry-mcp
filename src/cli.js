@@ -9,15 +9,23 @@ const clients = {
     addArgs: ({ name, url }) => ['mcp', 'add', name, '--url', url],
     getArgs: ({ name }) => ['mcp', 'get', name, '--json'],
     removeArgs: ({ name }) => ['mcp', 'remove', name],
-    authHelp: 'Open Codex, select the CreatorBerry MCP, and choose Authenticate.',
-    installedMessage: 'Codex may complete OAuth during installation. Open Codex and check that the CreatorBerry MCP shows as connected.',
+    authHelp: ({ name }) => `Authentication is still required for "${name}".
+Next command: codex mcp login ${name}
+Approve the command, then complete the browser sign-in yourself.
+After sign-in, run: codex mcp list
+Do not claim setup is complete until "${name}" is connected.`,
+    installedMessage: 'Configuration is complete; OAuth authentication is still required.',
   },
   claude: {
     command: 'claude',
     addArgs: ({ name, url, scope }) => ['mcp', 'add', '--transport', 'http', '--scope', scope, name, url],
     getArgs: ({ name }) => ['mcp', 'get', name],
     removeArgs: ({ name }) => ['mcp', 'remove', name],
-    authHelp: 'Open Claude Code, run /mcp, select CreatorBerry, and choose Authenticate.',
+    authHelp: ({ name }) => `Authentication is still required for "${name}".
+Next command: claude /mcp
+In Claude Code Desktop, approve the command to open the interactive MCP screen in the integrated PowerShell sidebar.
+Select "${name}", then complete the browser sign-in yourself.
+Run claude /mcp again and do not claim setup is complete until "${name}" is connected.`,
     installedMessage: 'Configuration is complete; OAuth authentication is still required.',
   },
 }
@@ -198,7 +206,7 @@ export async function runCli({ argv, runner, fetchImpl, input, output, errorOutp
   if (options.command === 'install') {
     if (current.exists && current.matchesUrl) {
       write(output, `CreatorBerry is already configured for ${options.client}. No changes made.`)
-      write(output, client.authHelp)
+      write(output, client.authHelp(options))
       return 0
     }
     if (current.exists) {
@@ -230,7 +238,7 @@ export async function runCli({ argv, runner, fetchImpl, input, output, errorOutp
     }
     write(output, `CreatorBerry was added to ${options.client}.`)
     write(output, client.installedMessage)
-    write(output, client.authHelp)
+    write(output, client.authHelp(options))
     return 0
   }
 

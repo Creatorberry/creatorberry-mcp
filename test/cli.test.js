@@ -78,7 +78,10 @@ test('installs Codex and verifies the result', async () => {
   const result = await testRun.run()
   assert.equal(result.code, 0)
   assert.deepEqual(testRun.calls[1], ['mcp', 'add', 'creatorberry', '--url', 'https://www.creatorberry.com/api/mcp'])
-  assert.match(result.stdout, /Codex may complete OAuth during installation/)
+  assert.match(result.stdout, /OAuth authentication is still required/)
+  assert.match(result.stdout, /Next command: codex mcp login creatorberry/)
+  assert.match(result.stdout, /After sign-in, run: codex mcp list/)
+  assert.match(result.stdout, /Do not claim setup is complete/)
 })
 
 test('installs Claude in user scope and verifies the result', async () => {
@@ -90,6 +93,10 @@ test('installs Claude in user scope and verifies the result', async () => {
     'creatorberry', 'https://www.creatorberry.com/api/mcp',
   ])
   assert.match(result.stdout, /OAuth authentication is still required/)
+  assert.match(result.stdout, /Next command: claude \/mcp/)
+  assert.match(result.stdout, /integrated PowerShell sidebar/)
+  assert.match(result.stdout, /complete the browser sign-in yourself/)
+  assert.match(result.stdout, /do not claim setup is complete/)
 })
 
 test('installation failure includes the underlying launcher error', async () => {
