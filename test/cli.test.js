@@ -93,8 +93,9 @@ test('installs Claude in user scope and verifies the result', async () => {
     'creatorberry', 'https://www.creatorberry.com/api/mcp',
   ])
   assert.match(result.stdout, /OAuth authentication is still required/)
-  assert.match(result.stdout, /Next command: claude \/mcp/)
-  assert.match(result.stdout, /integrated PowerShell sidebar/)
+  assert.match(result.stdout, /open PowerShell, type claude, and press Enter/)
+  assert.match(result.stdout, /Inside Claude Code, type \/mcp and press Enter/)
+  assert.doesNotMatch(result.stdout, /claude \/mcp/)
   assert.match(result.stdout, /complete the browser sign-in yourself/)
   assert.match(result.stdout, /do not claim setup is complete/)
 })
