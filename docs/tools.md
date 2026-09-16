@@ -38,7 +38,7 @@ The maximum result limit is 50. Results include creator information, metrics, a 
 
 ## `video-global`
 
-Searches the global CreatorBerry video database using semantic and keyword relevance. The user must provide a natural-language `query`; the older `keyword` input remains available as an alias.
+Searches video titles and descriptions across the global CreatorBerry database using keyword relevance. The user must provide a topic or keyword `query`; the older `keyword` input remains available as an alias.
 
 Optional inputs include:
 
@@ -46,7 +46,6 @@ Optional inputs include:
 - Platform
 - View, outlier-score, and engagement ranges
 - Number of recent posting days
-- Minimum semantic similarity
 - Sorting and result limit
 
 The maximum result limit is 50. This search is global rather than restricted to the selected workspace's watchlist.
