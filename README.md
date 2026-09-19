@@ -5,7 +5,8 @@ Connect CreatorBerry to Claude Code or Codex through CreatorBerry's hosted MCP s
 ## Start here
 
 - [MCP overview](docs/mcp.md)
-- [Claude Code and Codex setup](docs/setup.md)
+- [Connect with Claude Code](docs/claude.md)
+- [Connect with Codex](docs/codex.md)
 - [Tool reference](docs/tools.md)
 
 Give this repository to Claude Code or Codex:
@@ -13,7 +14,7 @@ Give this repository to Claude Code or Codex:
 ```text
 https://github.com/Creatorberry/creatorberry-mcp
 
-Connect CreatorBerry using the instructions in this repository. Read docs/setup.md completely, show me every command before running it, wait for my approval, preserve my other MCP connections, and verify the connection before claiming success.
+Connect CreatorBerry using the instructions for my client in this repository. Show me each command before running it, wait for my approval, preserve my other MCP connections, and verify the connection with a CreatorBerry tool before claiming success.
 ```
 
 The recommended path uses the official command provided by Claude Code or Codex. The agent can prepare the command, but you review and approve it. You personally complete CreatorBerry sign-in and consent.
@@ -64,7 +65,6 @@ Replace `claude` with `codex` when using Codex.
 - The default MCP name is `creatorberry`.
 - The CLI refuses to overwrite a different MCP entry with the same name.
 - Production endpoints must use HTTPS.
-- Plain HTTP is accepted only for `localhost`, `127.0.0.1`, or `::1` testing.
 - Do not give an agent your CreatorBerry password, OAuth token, or browser session.
 
 ## Development

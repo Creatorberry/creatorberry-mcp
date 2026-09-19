@@ -22,10 +22,10 @@ Do not claim setup is complete until "${name}" is connected.`,
     getArgs: ({ name }) => ['mcp', 'get', name],
     removeArgs: ({ name }) => ['mcp', 'remove', name],
     authHelp: ({ name }) => `Authentication is still required for "${name}".
-Open an interactive Claude Code terminal. If needed, open PowerShell, type claude, and press Enter.
-Inside Claude Code, type /mcp and press Enter.
-Select "${name}", choose Authenticate, then complete the browser sign-in yourself.
-Open /mcp again and do not claim setup is complete until "${name}" is connected.`,
+Next command: claude mcp login ${name}
+Run it in a terminal that can stay open during browser sign-in. Complete the sign-in yourself.
+If that is unavailable, use /mcp in an interactive Claude Code session and authenticate "${name}".
+Do not claim setup is complete until "${name}" is connected and its tools respond.`,
     installedMessage: 'Configuration is complete; OAuth authentication is still required.',
   },
 }

@@ -93,11 +93,10 @@ test('installs Claude in user scope and verifies the result', async () => {
     'creatorberry', 'https://www.creatorberry.com/api/mcp',
   ])
   assert.match(result.stdout, /OAuth authentication is still required/)
-  assert.match(result.stdout, /open PowerShell, type claude, and press Enter/)
-  assert.match(result.stdout, /Inside Claude Code, type \/mcp and press Enter/)
-  assert.doesNotMatch(result.stdout, /claude \/mcp/)
-  assert.match(result.stdout, /complete the browser sign-in yourself/)
-  assert.match(result.stdout, /do not claim setup is complete/)
+  assert.match(result.stdout, /claude mcp login creatorberry/)
+  assert.match(result.stdout, /terminal that can stay open during browser sign-in/)
+  assert.match(result.stdout, /Complete the sign-in yourself/)
+  assert.match(result.stdout, /Do not claim setup is complete/)
 })
 
 test('installation failure includes the underlying launcher error', async () => {
@@ -132,7 +131,7 @@ test('install refuses to overwrite a different same-name entry', async () => {
 })
 
 test('allows HTTP only for local testing', async () => {
-  const local = await harness({ argv: ['install', '--client', 'codex', '--url', 'http://localhost:3100/api/mcp', '--dry-run'] }).run()
+  const local = await harness({ argv: ['install', '--client', 'codex', '--url', 'http://localhost:8765/api/mcp', '--dry-run'] }).run()
   const remote = await harness({ argv: ['install', '--client', 'codex', '--url', 'http://example.com/mcp', '--dry-run'] }).run()
   assert.equal(local.code, 0)
   assert.equal(remote.code, 2)

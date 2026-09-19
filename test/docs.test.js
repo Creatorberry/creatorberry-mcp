@@ -13,14 +13,21 @@ test('MCP overview documents endpoint, OAuth, permissions, and a safe first requ
   assert.match(doc, /list my automation filters/i)
 })
 
-test('setup documents accurate Claude Code registration and interactive OAuth', async () => {
+test('setup documents production-only Claude Code registration and separate OAuth', async () => {
   const doc = await readDoc('setup')
   assert.match(doc, /claude mcp add --transport http --scope user creatorberry/)
-  assert.match(doc, /type `claude` and press \*\*Enter\*\*/i)
-  assert.match(doc, /type `\/mcp` and press \*\*Enter\*\*/i)
-  assert.doesNotMatch(doc, /claude \/mcp/)
+  assert.match(doc, /claude mcp login creatorberry/)
+  assert.doesNotMatch(doc, /localhost|3100/i)
   assert.match(doc, /Never enter credentials or approve access for the user/)
   assert.match(doc, /confirm that \*\*creatorberry\*\* is connected/i)
+})
+
+test('public Claude Code guide uses the hosted endpoint and verifies a tool call', async () => {
+  const doc = await readDoc('claude')
+  assert.match(doc, /https:\/\/www\.creatorberry\.com\/api\/mcp/)
+  assert.match(doc, /claude mcp login creatorberry/)
+  assert.match(doc, /filters/)
+  assert.doesNotMatch(doc, /localhost|3100/i)
 })
 
 test('setup documents Codex registration, OAuth login, and verification', async () => {
