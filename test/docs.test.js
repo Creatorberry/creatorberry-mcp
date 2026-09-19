@@ -17,7 +17,7 @@ test('setup documents production-only Claude Code registration and separate OAut
   const doc = await readDoc('setup')
   assert.match(doc, /claude mcp add --transport http --scope user creatorberry/)
   assert.match(doc, /claude mcp login creatorberry/)
-  assert.doesNotMatch(doc, /localhost|3100/i)
+  assert.doesNotMatch(doc, /localhost|http:\/\//i)
   assert.match(doc, /Never enter credentials or approve access for the user/)
   assert.match(doc, /confirm that \*\*creatorberry\*\* is connected/i)
 })
@@ -27,7 +27,7 @@ test('public Claude Code guide uses the hosted endpoint and verifies a tool call
   assert.match(doc, /https:\/\/www\.creatorberry\.com\/api\/mcp/)
   assert.match(doc, /claude mcp login creatorberry/)
   assert.match(doc, /filters/)
-  assert.doesNotMatch(doc, /localhost|3100/i)
+  assert.doesNotMatch(doc, /localhost|http:\/\//i)
 })
 
 test('setup documents Codex registration, OAuth login, and verification', async () => {
